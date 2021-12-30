@@ -1,0 +1,8 @@
+*.json
+.pytest_cache
+.env
+.flask_env
+*.db
+.idea
+**/__pycache__
+/api/config.py
