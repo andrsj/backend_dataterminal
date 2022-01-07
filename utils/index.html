@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+<script>
+// socket = io('ws://api.dataterminal.ru/', {
+socket = io('ws://localhost:5000/', {
+    // auth: {
+    //     // 'token'
+    //     // token: 'token_key_access'
+    // },
+    auth: 'token',
+    transports: ['polling']
+});
+
+socket.on('connect', () => {
+    console.log(`connect`)
+})
+
+socket.on("disconnect", (reason) => {
+    console.warn("disconnected", reason)
+})
+
+socket.on('broadcast', (data) => {
+    console.log(data)
+})
+
+socket.on("connect_error", (error) => {
+    console.warn("connect_error")
+});
+</script>
+<body>
+    <h1>HELLO WORLD</h1>
+    <form action="">
+        <label for="type_event">Type:</label><br>
+        <input type="text" id="type_event" name="type_event" value="broadcast"><br>
+        <label for="msg">Message:</label><br>
+        <input type="text" id="msg" name="msg" value="Sample Text"><br><br>
+        
+    </form> 
+    <button onclick="socket.emit('message', document.getElementById('msg').value)">Send</button>
+    <button onclick="socket.close()">E X I T</button>
+</body>
+</html>
